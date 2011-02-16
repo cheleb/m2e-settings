@@ -40,7 +40,6 @@ import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.MavenRuntime;
 import org.eclipse.m2e.core.embedder.MavenRuntimeManager;
 import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;
-import org.eclipse.m2e.core.ui.internal.M2EUIPluginActivator;
 import org.eclipse.m2e.settings.core.model.SettingFile;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
@@ -67,14 +66,15 @@ public class ProjectSettingsConfigurator extends ProjectConfigurator {
 
 		MavenProject mavenProject = projectConfigurationRequest
 				.getMavenProject();
-		 
+
+		
+		
 		Plugin eclipsePlugin = mavenProject
 				.getPlugin(ORG_APACHE_MAVEN_PLUGINS_MAVEN_ECLIPSE_PLUGIN);
 		if (eclipsePlugin == null) {
-			System.out.println("Could not set eclipse settings, consider org.apache.maven.plugins:maven-eclipse-plugin!");
 			LOGGER.info("Could not set eclipse settings, consider org.apache.maven.plugins:maven-eclipse-plugin!");
 		} else {
-			LOGGER.debug("Configuring from org.apache.maven.plugins:maven-eclipse-plugin!");
+			LOGGER.info("Using org.apache.maven.plugins:maven-eclipse-plugin configuration");
 			configureEclipseMeta(project, eclipsePlugin, monitor);
 		}
 
@@ -155,7 +155,7 @@ public class ProjectSettingsConfigurator extends ProjectConfigurator {
 		for (SettingFile settingFile : settingFiles) {
 			InputStream contentStream = openStream(settingFile, classLoader);
 			if (contentStream == null) {
-				System.err.println("Could not find content for: " + settingFile);
+				LOGGER.error("Could not find content for: " + settingFile);
 			} else {
 				try {
 					if (".settings/org.eclipse.jdt.core.prefs"
@@ -170,15 +170,15 @@ public class ProjectSettingsConfigurator extends ProjectConfigurator {
 						}
 					}
 				} catch (IOException e) {
-					System.err.println(e.getMessage());
+					LOGGER.error("Processing " + settingFiles, e);
 				} catch (BackingStoreException e) {
-					System.err.println(e.getMessage());
+					LOGGER.error("Processing " + settingFiles, e);
 				} finally {
 					if (contentStream != null) {
 						try {
 							contentStream.close();
 						} catch (IOException e) {
-							System.err.println(e.getMessage());
+							LOGGER.error("Processing " + settingFiles, e);
 						}
 					}
 				}
