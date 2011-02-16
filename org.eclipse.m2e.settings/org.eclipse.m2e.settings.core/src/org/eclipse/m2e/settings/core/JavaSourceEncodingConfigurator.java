@@ -42,16 +42,13 @@ public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator 
 	public void configure(ProjectConfigurationRequest request,
 			IProgressMonitor monitor) throws CoreException {
 
-		
-
 		MavenProject mavenProject = request.getMavenProject();
 
-		
 		Plugin plugin = mavenProject
 				.getPlugin(ORG_APACHE_MAVEN_PLUGINS_MAVEN_COMPILER_PLUGIN);
 
 		if (plugin == null) {
-			System.out.println("Could not force the encoding, consider "
+			LOGGER.warn("Could not force the encoding, consider "
 					+ ORG_APACHE_MAVEN_PLUGINS_MAVEN_COMPILER_PLUGIN
 					+ " <encoding>");
 		} else {
@@ -60,15 +57,19 @@ public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator 
 
 	}
 
-	private boolean configureEncoding(ProjectConfigurationRequest request, Plugin plugin) {
+	private boolean configureEncoding(ProjectConfigurationRequest request,
+			Plugin plugin) {
 
 		IProject project = request.getProject();
 		String encoding = extractEncoding((Xpp3Dom) plugin.getConfiguration());
 		if (encoding == null) {
 			IResource pomFile = request.getPom();
-			addMarker(pomFile, IMarker.PROBLEM, "No encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>", 1,
-							IMarker.PRIORITY_NORMAL, false);
-			LOGGER.info("Could not force the encoding, ");
+			addMarker(
+					pomFile,
+					IMarker.PROBLEM,
+					"No encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>",
+					1, IMarker.PRIORITY_NORMAL, false);
+			LOGGER.info("Could not force the encoding, no encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>");
 			return false;
 		}
 
@@ -81,7 +82,7 @@ public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator 
 		String orig = preferences.get("<project>", null);
 
 		if (encoding.equals(orig)) {
-			System.out.println("Encoding unchanged (" + encoding + ").");
+			LOGGER.debug("Encoding unchanged (" + encoding + ").");
 			return false;
 		}
 
@@ -89,11 +90,11 @@ public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator 
 
 		try {
 			preferences.flush();
-			System.out.println("Encoding changed from " + orig + " to "
-					+ encoding + ".");
+			LOGGER.debug("Encoding changed from " + orig + " to " + encoding
+					+ ".");
 			return true;
 		} catch (BackingStoreException e) {
-			System.err.println(e.getMessage());
+			LOGGER.error("Configuring encoding error", e);
 		}
 
 		return false;
