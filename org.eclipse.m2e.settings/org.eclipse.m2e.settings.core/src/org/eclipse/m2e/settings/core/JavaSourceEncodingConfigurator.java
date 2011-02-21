@@ -70,6 +70,7 @@ public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator 
 					"No encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>",
 					1, IMarker.PRIORITY_NORMAL, false);
 			LOGGER.info("Could not force the encoding, no encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>");
+			LOGGER.warn("Could not force the encoding, no encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>");
 			return false;
 		}
 
@@ -80,6 +81,18 @@ public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator 
 						+ "/org.eclipse.core.resources/encoding");
 
 		String orig = preferences.get("<project>", null);
+		try {
+			IMarker iMarker = findMarker(
+					request.getPom(),
+					IMarker.PROBLEM,
+					"No encoding found, org.apache.maven.plugins:maven-compiler-plugin found but without <encoding>",
+					1, IMarker.PRIORITY_NORMAL, false);
+			if (iMarker != null) {
+				iMarker.delete();
+			}
+		} catch (CoreException e1) {
+			LOGGER.error(request.getMavenProject().toString(), e1);
+		}
 
 		if (encoding.equals(orig)) {
 			LOGGER.debug("Encoding unchanged (" + encoding + ").");
