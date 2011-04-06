@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Maven Integration for Eclipse Settings
 Bundle-SymbolicName: org.eclipse.m2e.settings.core;singleton:=true
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.13.0.qualifier
 Bundle-Activator: org.eclipse.m2e.settings.core.SettingsActivator
 Bundle-Vendor: Orcades LR.
 Require-Bundle: org.eclipse.core.runtime,
@@ -31,7 +31,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jst.jee,
  org.eclipse.jst.j2ee.jca,
  org.eclipse.ui.ide,
- org.slf4j.api
+ org.slf4j.api,
+ org.eclipse.m2e.core.ui;bundle-version="0.13.0",
+ org.eclipse.m2e.logback.configuration;bundle-version="0.13.0",
+ org.eclipse.m2e.logging;bundle-version="0.13.0"
 Bundle-RequiredExecutionEnvironment:  JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.m2e.settings.core;
@@ -43,5 +46,4 @@ Export-Package: org.eclipse.m2e.settings.core;
    org.eclipse.m2e.core.project.configurator,
    org.eclipse.core.resources,
    org.osgi.framework",
- org.eclipse.m2e.settings.core.internal.lifecycle;uses:="org.eclipse.m2e.core.project.configurator",
  org.eclipse.m2e.settings.core.model

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.m2e.settings</groupId>
 	<artifactId>org.eclipse.m2e.settings</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<packaging>pom</packaging>
 	<name>General settings configuration support</name>
 	<description>Allow the eclipse settings configuration (file encoding, formater ...) from maven configuration.</description>
@@ -13,22 +13,23 @@
 	</prerequisites>
 
 	<parent>
-		<groupId>org.sonatype.forge</groupId>
-		<artifactId>forge-parent</artifactId>
-		<version>6</version>
+		<groupId>org.eclipse.m2e</groupId>
+		<artifactId>org.eclipse.m2e.parent</artifactId>
+		<version>0.13.0-SNAPSHOT</version>
 	</parent>
 
 	<properties>
-		<tycho-version>0.10.0</tycho-version>
-		<target.platform>m2e-wtp-e36</target.platform>  
+<!-- 		<tycho-version>0.10.0</tycho-version> -->
+<!-- 		<target.platform>m2e-wtp-e36</target.platform> -->
 	</properties>
 
 	<modules>
-		<module>org.eclipse.m2e.settings.target-platform</module>
+<!-- 		<module>org.eclipse.m2e.settings.target-platform</module> -->
 		<module>org.eclipse.m2e.settings.core</module>
+		<module>org.eclipse.m2e.settings.feature</module>
 	</modules>
 
-
+<!-- 
 	<build>
 		<plugins>
 			<plugin>
@@ -69,8 +70,7 @@
 							<include>**/*Test.java</include>
 						</includes>
 						<argLine>${tycho.test.jvmArgs}</argLine>
-						<!-- kill test JVM it tests take more than 15 minutes (900 seconds) 
-							to finish -->
+						
 						<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
 					</configuration>
 				</plugin>
@@ -136,6 +136,7 @@
 			</build>
 		</profile>
 	</profiles>
+ -->
 
 
 </project>
