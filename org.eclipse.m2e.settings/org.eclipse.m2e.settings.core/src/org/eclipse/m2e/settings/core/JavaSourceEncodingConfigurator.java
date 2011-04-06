@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author olivier.nouguier@gmail.com
  * 
  */
+@Deprecated
 public class JavaSourceEncodingConfigurator extends AbstractProjectConfigurator {
 
 	private static final Logger LOGGER = LoggerFactory
