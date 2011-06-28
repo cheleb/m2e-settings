@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://m2eclipse.sonatype.org/site-extras">
+      Maven Integration for Eclipse Extras
+   </description>
+   <feature url="features/org.eclipse.m2e.settings.feature_1.0.0.jar" id="org.eclipse.m2e.settings.feature" version="1.0.0">
+      <category name="m2e-settings"/>
+   </feature>
+   <category-def name="m2e-settings" label="Maven Integration for Eclipse Settings"/>
+</site>

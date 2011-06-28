@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.m2e.settings.settings.feature_0.0.13-SNAPSHOT.jar" id="org.eclipse.m2e.settings.feature" version="0.0.3-SNAPSHOT">
-      <category name="orcades-config"/>
-   </feature>
+   <feature url="features/org.eclipse.m2e.settings.feature_1.0.0.jar" id="org.eclipse.m2e.settings.feature" version="1.0.0"/>
    <category-def name="orcades-config" label="Orcades config">
       <description>
          IDE configuration.

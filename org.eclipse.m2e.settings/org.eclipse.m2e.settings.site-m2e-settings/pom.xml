@@ -13,11 +13,11 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>org.eclipse.m2e.settings.feature</groupId>
-	<artifactId>org.eclipse.m2e.settings.feature</artifactId>
-	<packaging>eclipse-feature</packaging>
+	<groupId>org.eclipse.m2e.settings</groupId>
+	<artifactId>org.eclipse.m2e.settings.site-m2e-settings</artifactId>
+	<packaging>eclipse-update-site</packaging>
 
-	<name>Maven Integration for Eclipse Settings (Optional)</name>
+	<name>Maven Integration for Eclipse Settings Update site</name>
 
 
 
@@ -25,46 +25,41 @@
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
+				<artifactId>tycho-packaging-plugin</artifactId>
 				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>maven-osgi-packaging-plugin</artifactId>
-				<version>${tycho-version}</version>
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>categorization</id> -->
+<!-- 						<phase>package</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>category-p2-metadata</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
 				<configuration>
-					<deployableFeature>true</deployableFeature>
-				</configuration>
-			</plugin>
-			
-			
-
-			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<resolver>p2</resolver>
-					<target>
-						<artifact>
-							<groupId>org.eclipse.m2e</groupId>
-							<artifactId>target-platform</artifactId>
-							<version>${project.version}</version>
-						</artifact>
-					</target>
-					<ignoreTychoRepositories>true</ignoreTychoRepositories>
+					<metadataRepositoryName>Maven Integration for Eclipse Settings</metadataRepositoryName>
+					<artifactRepositoryName>Maven Integration for Eclipse Settings</artifactRepositoryName>
+					
 				</configuration>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
-					<source>1.6</source>
-					<target>1.6</target>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
 				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>
