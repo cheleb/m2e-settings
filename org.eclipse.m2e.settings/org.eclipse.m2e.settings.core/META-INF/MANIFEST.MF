@@ -32,7 +32,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jst.j2ee.jca,
  org.eclipse.ui.ide,
  org.slf4j.api,
- org.eclipse.m2e.core.ui;bundle-version="0.13.0",
+ org.eclipse.m2e.core.ui;bundle-version="1.0.0",
  org.eclipse.jdt.ui;bundle-version="3.7.0"
 Bundle-RequiredExecutionEnvironment:  JavaSE-1.6
 Bundle-ActivationPolicy: lazy
