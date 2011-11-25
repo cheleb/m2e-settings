@@ -52,6 +52,7 @@
 		<module>org.eclipse.m2e.settings.core</module>
 		<module>org.eclipse.m2e.settings.feature</module>
 		<module>org.eclipse.m2e.settings.site-m2e-settings</module>
+		<module>sample-configuration-artifact</module>
 	</modules>
 
 <profiles>

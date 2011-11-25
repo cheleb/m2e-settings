@@ -12,8 +12,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2e.core.embedder.IMaven;
 
 public class JarFileUtil {
-	public static  List<JarFile> resolveJar(IMaven maven, List<Dependency> dependencies,
-			IProgressMonitor monitor) throws IOException, CoreException {
+	public static List<JarFile> resolveJar(IMaven maven,
+			List<Dependency> dependencies, IProgressMonitor monitor)
+			throws IOException, CoreException {
 		List<JarFile> jarFiles = new ArrayList<JarFile>();
 		for (int i = 0; i < dependencies.size(); i++) {
 			Dependency dependency = dependencies.get(i);

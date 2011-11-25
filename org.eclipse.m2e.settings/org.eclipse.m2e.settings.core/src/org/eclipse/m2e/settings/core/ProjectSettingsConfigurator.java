@@ -11,7 +11,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.maven.model.Plugin;
 import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,13 +18,16 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.ui.preferences.formatter.FormatterProfileStore;
 import org.eclipse.jdt.internal.ui.preferences.formatter.ProfileManager.Profile;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.MavenRuntime;
 import org.eclipse.m2e.core.embedder.MavenRuntimeManager;
 import org.eclipse.m2e.core.project.configurator.AbstractProjectConfigurator;
 import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;
 import org.eclipse.m2e.settings.core.model.Formatter;
+import org.eclipse.m2e.settings.core.model.JDTUIPref;
 import org.eclipse.m2e.settings.core.model.SettingFiles;
+import org.osgi.service.prefs.BackingStoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -37,6 +39,7 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 			.getLogger(ProjectSettingsConfigurator.class);
 
 	private static final String ORG_APACHE_MAVEN_PLUGINS_MAVEN_ECLIPSE_PLUGIN = "org.eclipse.maven.plugins:maven-eclipse-plugin";
+
 
 	@Override
 	public void configure(
@@ -55,10 +58,13 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		} else {
 			LOGGER.info("Using org.apache.maven.plugins:maven-eclipse-plugin configuration");
 			try {
-				configureEclipseMeta(project, eclipsePlugin, monitor);
+				if (configureEclipseMeta(project, eclipsePlugin, monitor)) {
+					LOGGER.info("Project configured.");
+				} else {
+					LOGGER.error("Project not configured.");
+				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error("Failure during settings configuration", e);
 			}
 		}
 
@@ -91,6 +97,7 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 				Map<String, String> javaOptions = extractJavaOption(javaProject);
 				javaOptions.putAll(profile.getSettings());
 				javaProject.setOptions(javaOptions);
+
 			}
 
 		}
@@ -159,28 +166,68 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 			Plugin eclipsePlugin, IProgressMonitor monitor) throws IOException,
 			CoreException {
 
+		SettingFiles settingFiles = ConfigurationHelper
+				.extractSettingsFile(eclipsePlugin);
+
 		List<JarFile> jarFiles = JarFileUtil.resolveJar(maven,
 				eclipsePlugin.getDependencies(), monitor);
 
-		SettingFiles settingFiles = extractSettingFile((Xpp3Dom) eclipsePlugin
-				.getConfiguration());
+		applyFormatter(project, monitor, settingFiles, jarFiles);
 
-		if (settingFiles.hasFormatter()) {
-			Formatter formatter = settingFiles.getFormatter();
+		applyJdtUIPref(project, monitor, settingFiles, jarFiles);
 
-			InputStream contentStream = openStream(formatter.getFileName(),
-					jarFiles);
-			if (contentStream == null) {
-				LOGGER.error("Could not find content for: "
-						+ formatter.getFileName());
-			} else {
+		return true;
+	}
 
-				setJavaOptions(contentStream, formatter.getProfile(), monitor,
-						project);
+	private void applyJdtUIPref(IProject project, IProgressMonitor monitor,
+			SettingFiles settingFiles, List<JarFile> jarFiles)
+			throws IOException {
+		if (settingFiles.hasJdtUIPref()) {
+			JDTUIPref jdtuiPref = settingFiles.getJdtUIPref();
+			InputStream contentStream = null;
+			try {
+				contentStream = openStream(jdtuiPref.getFilename(), jarFiles);
+				if (contentStream == null) {
+					LOGGER.error("Could not find content for: "
+							+ jdtuiPref.getFilename());
+				} else {
+					ProjectPreferencesUtils.setOtherPreferences(project,
+							contentStream, JavaUI.ID_PLUGIN);
+				}
 
+			} catch (BackingStoreException e) {
+				throw new IOException(e);
+			} finally {
+				if (contentStream != null) {
+					contentStream.close();
+				}
 			}
 		}
-		return true;
+
+	}
+
+	private void applyFormatter(IProject project, IProgressMonitor monitor,
+			SettingFiles settingFiles, List<JarFile> jarFiles)
+			throws IOException, CoreException {
+		if (settingFiles.hasFormatter()) {
+			Formatter formatter = settingFiles.getFormatter();
+			InputStream contentStream = null;
+			try {
+				contentStream = openStream(formatter.getFileName(), jarFiles);
+				if (contentStream == null) {
+					LOGGER.error("Could not find content for: "
+							+ formatter.getFileName());
+				} else {
+					setJavaOptions(contentStream, formatter.getProfile(),
+							monitor, project);
+				}
+			} finally {
+				if (contentStream != null) {
+					contentStream.close();
+				}
+			}
+
+		}
 	}
 
 	private InputStream openStream(String formatterPath, List<JarFile> jarFiles)
@@ -194,25 +241,6 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		}
 		LOGGER.warn("Entry " + formatterPath + " not found in " + jarFiles);
 		return null;
-	}
-
-	private SettingFiles extractSettingFile(Xpp3Dom configuration) {
-		SettingFiles settingFiles = new SettingFiles();
-
-		Xpp3Dom formatterXpp3Dom = configuration.getChild("formatter");
-		if (formatterXpp3Dom != null) {
-			Formatter formatter = new Formatter();
-			Xpp3Dom formatterFileName = formatterXpp3Dom.getChild("filename");
-			if (formatterFileName != null) {
-				formatter.setFileName(formatterFileName.getValue());
-				settingFiles.setFormatter(formatter);
-			}
-			Xpp3Dom formatterProfileName = formatterXpp3Dom.getChild("profile");
-			if (formatterProfileName != null) {
-				formatter.setProfile(formatterProfileName.getValue());
-			}
-		}
-		return settingFiles;
 	}
 
 	@SuppressWarnings("unchecked")

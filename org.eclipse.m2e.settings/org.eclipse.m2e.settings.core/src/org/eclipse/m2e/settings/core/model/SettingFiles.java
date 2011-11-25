@@ -8,6 +8,8 @@ public class SettingFiles {
 	
 	private Map<String, String> extraFiles;
 
+	private JDTUIPref jdtUIPref;
+
 	public Formatter getFormatter() {
 		return formatter;
 	}
@@ -27,6 +29,22 @@ public class SettingFiles {
 	public boolean hasFormatter() {
 		return formatter != null;
 	}
+
+	public JDTUIPref getJdtUIPref() {
+		return jdtUIPref;
+	}
+
+	public void setJdtUIPref(JDTUIPref jdtUIPref) {
+		this.jdtUIPref = jdtUIPref;
+	}
+
+	public boolean hasJdtUIPref() {
+		return jdtUIPref != null;
+	}
+
+	
+
+	
 	
 	 
 	

@@ -13,18 +13,15 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-public class ProjectPreferencesUtils  {
+public class ProjectPreferencesUtils {
 
-	
-
-	protected Preferences getPrefences(IProject project, String pref) {
+	static Preferences getPrefences(IProject project, String pref) {
 		return Platform.getPreferencesService().getRootNode()
 				.node("project/" + project.getName() + "/" + pref);
 	}
 
-	protected void setOtherPreferences(IProject project,
-			InputStream inputStream, String pref) throws IOException,
-			BackingStoreException {
+	static void setOtherPreferences(IProject project, InputStream inputStream,
+			String pref) throws IOException, BackingStoreException {
 
 		if (inputStream == null) {
 			System.out.println("No settings for: " + pref);
