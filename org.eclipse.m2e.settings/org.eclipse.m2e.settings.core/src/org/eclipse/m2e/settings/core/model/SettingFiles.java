@@ -1,5 +1,7 @@
 package org.eclipse.m2e.settings.core.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SettingFiles {
@@ -8,7 +10,9 @@ public class SettingFiles {
 	
 	private Map<String, String> extraFiles;
 
-	private JDTUIPref jdtUIPref;
+	private List<EclipsePreference> eclipsePreferences = new ArrayList<EclipsePreference>();
+
+	
 
 	public Formatter getFormatter() {
 		return formatter;
@@ -30,18 +34,17 @@ public class SettingFiles {
 		return formatter != null;
 	}
 
-	public JDTUIPref getJdtUIPref() {
-		return jdtUIPref;
+
+
+	public void setEclipsePreferences(List<EclipsePreference> eclipsePreferences) {
+		this.eclipsePreferences = eclipsePreferences;
+		
 	}
 
-	public void setJdtUIPref(JDTUIPref jdtUIPref) {
-		this.jdtUIPref = jdtUIPref;
+	
+	public List<EclipsePreference> getEclipsePreferences() {
+		return eclipsePreferences;
 	}
-
-	public boolean hasJdtUIPref() {
-		return jdtUIPref != null;
-	}
-
 	
 
 	

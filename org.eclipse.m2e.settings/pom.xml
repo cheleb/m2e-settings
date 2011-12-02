@@ -4,7 +4,7 @@
 	<groupId>org.eclipse.m2e.settings</groupId>
 	<artifactId>org.eclipse.m2e.settings</artifactId>
 
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 
 	<packaging>pom</packaging>
 	<name>General settings configuration support</name>

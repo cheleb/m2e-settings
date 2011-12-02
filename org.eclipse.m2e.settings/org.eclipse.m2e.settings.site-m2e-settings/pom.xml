@@ -10,10 +10,10 @@
 	<parent>
 		<groupId>org.eclipse.m2e.settings</groupId>
 		<artifactId>org.eclipse.m2e.settings</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 
-	<groupId>org.eclipse.m2e.settings</groupId>
+	
 	<artifactId>org.eclipse.m2e.settings.site-m2e-settings</artifactId>
 	<packaging>eclipse-update-site</packaging>
 

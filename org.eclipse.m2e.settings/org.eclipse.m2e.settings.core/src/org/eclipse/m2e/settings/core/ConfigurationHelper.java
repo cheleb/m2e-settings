@@ -1,9 +1,13 @@
 package org.eclipse.m2e.settings.core;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import org.apache.maven.model.Plugin;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+import org.eclipse.m2e.settings.core.model.EclipsePreference;
 import org.eclipse.m2e.settings.core.model.Formatter;
-import org.eclipse.m2e.settings.core.model.JDTUIPref;
 import org.eclipse.m2e.settings.core.model.SettingFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +16,9 @@ public class ConfigurationHelper {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ConfigurationHelper.class);
+
+	private static final Pattern PATTERN = Pattern
+			.compile("([a-b,\\.])\\.pref$");
 
 	public static SettingFiles extractSettingsFile(Plugin eclipsePlugin) {
 
@@ -29,24 +36,38 @@ public class ConfigurationHelper {
 
 		settingFiles.setFormatter(formatter);
 
-		JDTUIPref jdtUIPref = extractJdtUIPref(configurationXpp3Dom);
+		List<EclipsePreference> eclipsePreferences = extractEclipsePreferences(configurationXpp3Dom);
 
-		settingFiles.setJdtUIPref(jdtUIPref);
+		settingFiles.setEclipsePreferences(eclipsePreferences);
 
 		return settingFiles;
 	}
 
-	private static JDTUIPref extractJdtUIPref(Xpp3Dom configurationXpp3Dom) {
-		Xpp3Dom formatterXpp3Dom = configurationXpp3Dom.getChild("jdtui");
-		if (formatterXpp3Dom != null) {
-			JDTUIPref jdtuiPref = new JDTUIPref();
-			Xpp3Dom fileName = formatterXpp3Dom.getChild("filename");
-			if (fileName != null) {
-				jdtuiPref.setFilename(fileName.getValue());
+	private static List<EclipsePreference> extractEclipsePreferences(
+			Xpp3Dom configurationXpp3Dom) {
+		List<EclipsePreference> eclipsePreferences = new ArrayList<EclipsePreference>();
+		Xpp3Dom preferencesDom = configurationXpp3Dom.getChild("preferences");
+		if (preferencesDom != null) {
+
+			Xpp3Dom[] preferenceDoms = preferencesDom.getChildren("preference");
+			for (Xpp3Dom preferenceDom : preferenceDoms) {
+				Xpp3Dom fileNameXpp3Dom = preferenceDom.getChild("filename");
+				Xpp3Dom nameXpp3Dom = preferenceDom.getChild("name");
+
+				if (fileNameXpp3Dom != null && nameXpp3Dom != null) {
+					String filename = fileNameXpp3Dom.getValue();
+					String name = nameXpp3Dom.getValue();
+
+					EclipsePreference eclipsePreference = new EclipsePreference();
+					eclipsePreference.setFilename(filename);
+					eclipsePreference.setPref(name);
+					eclipsePreferences.add(eclipsePreference);
+
+				}
 			}
-			return jdtuiPref;
+
 		}
-		return null;
+		return eclipsePreferences;
 	}
 
 	private static Formatter extractFormatter(Xpp3Dom configurationXpp3Dom) {

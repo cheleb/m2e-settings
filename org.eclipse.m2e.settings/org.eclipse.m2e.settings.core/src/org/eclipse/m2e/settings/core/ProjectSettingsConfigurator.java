@@ -24,8 +24,8 @@ import org.eclipse.m2e.core.embedder.MavenRuntime;
 import org.eclipse.m2e.core.embedder.MavenRuntimeManager;
 import org.eclipse.m2e.core.project.configurator.AbstractProjectConfigurator;
 import org.eclipse.m2e.core.project.configurator.ProjectConfigurationRequest;
+import org.eclipse.m2e.settings.core.model.EclipsePreference;
 import org.eclipse.m2e.settings.core.model.Formatter;
-import org.eclipse.m2e.settings.core.model.JDTUIPref;
 import org.eclipse.m2e.settings.core.model.SettingFiles;
 import org.osgi.service.prefs.BackingStoreException;
 import org.slf4j.Logger;
@@ -39,7 +39,6 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 			.getLogger(ProjectSettingsConfigurator.class);
 
 	private static final String ORG_APACHE_MAVEN_PLUGINS_MAVEN_ECLIPSE_PLUGIN = "org.eclipse.maven.plugins:maven-eclipse-plugin";
-
 
 	@Override
 	public void configure(
@@ -174,25 +173,29 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 
 		applyFormatter(project, monitor, settingFiles, jarFiles);
 
-		applyJdtUIPref(project, monitor, settingFiles, jarFiles);
+		applyEclipsePreferencesPref(project, monitor, settingFiles, jarFiles);
 
 		return true;
 	}
 
-	private void applyJdtUIPref(IProject project, IProgressMonitor monitor,
-			SettingFiles settingFiles, List<JarFile> jarFiles)
-			throws IOException {
-		if (settingFiles.hasJdtUIPref()) {
-			JDTUIPref jdtuiPref = settingFiles.getJdtUIPref();
+	private void applyEclipsePreferencesPref(IProject project,
+			IProgressMonitor monitor, SettingFiles settingFiles,
+			List<JarFile> jarFiles) throws IOException {
+		List<EclipsePreference> eclipsePreferences = settingFiles
+				.getEclipsePreferences();
+
+		for (EclipsePreference eclipsePreference : eclipsePreferences) {
+
+			
 			InputStream contentStream = null;
 			try {
-				contentStream = openStream(jdtuiPref.getFilename(), jarFiles);
+				contentStream = openStream(eclipsePreference.getFilename(), jarFiles);
 				if (contentStream == null) {
 					LOGGER.error("Could not find content for: "
-							+ jdtuiPref.getFilename());
+							+ eclipsePreference.getFilename());
 				} else {
 					ProjectPreferencesUtils.setOtherPreferences(project,
-							contentStream, JavaUI.ID_PLUGIN);
+							contentStream, eclipsePreference.getPref());
 				}
 
 			} catch (BackingStoreException e) {
