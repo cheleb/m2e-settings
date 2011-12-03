@@ -38,7 +38,7 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 	private final static Logger LOGGER = LoggerFactory
 			.getLogger(ProjectSettingsConfigurator.class);
 
-	private static final String ORG_APACHE_MAVEN_PLUGINS_MAVEN_ECLIPSE_PLUGIN = "org.eclipse.maven.plugins:maven-eclipse-plugin";
+	private static final String ORG_ECLIPSE_M2E_SETTINGS_MAVEN_ECLIPSE_PLUGIN = "org.eclipse.m2e.settings:maven-eclipse-plugin";
 
 	@Override
 	public void configure(
@@ -51,7 +51,7 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 				.getMavenProject();
 
 		Plugin eclipsePlugin = mavenProject
-				.getPlugin(ORG_APACHE_MAVEN_PLUGINS_MAVEN_ECLIPSE_PLUGIN);
+				.getPlugin(ORG_ECLIPSE_M2E_SETTINGS_MAVEN_ECLIPSE_PLUGIN);
 		if (eclipsePlugin == null) {
 			LOGGER.info("Could not set eclipse settings, consider org.apache.maven.plugins:maven-eclipse-plugin!");
 		} else {

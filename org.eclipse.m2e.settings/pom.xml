@@ -53,6 +53,7 @@
 		<module>org.eclipse.m2e.settings.feature</module>
 		<module>org.eclipse.m2e.settings.site-m2e-settings</module>
 		<module>sample-configuration-artifact</module>
+		<module>maven-eclipse-plugin</module>
 	</modules>
 
 <profiles>
