@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>org.eclipse.m2e.settings</groupId>
 		<artifactId>org.eclipse.m2e.settings</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.1</version>
 	</parent>
 
 	<groupId>org.eclipse.m2e.settings.feature</groupId>

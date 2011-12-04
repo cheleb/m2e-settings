@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.m2e.settings.feature_1.1.0.jar" id="org.eclipse.m2e.settings.feature" version="1.1.0">
-      <category name="orcades-config"/>
+   <feature url="features/org.eclipse.m2e.settings.feature_1.1.1.jar" id="org.eclipse.m2e.settings.feature" version="1.1.1">
+      <category name="m2e.settings"/>
    </feature>
-   <category-def name="orcades-config" label="Orcades config">
+   <category-def name="m2e.settings" label="m2e settings">
       <description>
-         IDE configuration.
+         IDE configuration from maven artifatct.
       </description>
    </category-def>
 </site>
