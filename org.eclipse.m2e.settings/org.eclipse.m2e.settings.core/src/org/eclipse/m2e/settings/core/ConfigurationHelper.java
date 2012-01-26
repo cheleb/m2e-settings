@@ -2,7 +2,6 @@ package org.eclipse.m2e.settings.core;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.apache.maven.model.Plugin;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
@@ -12,13 +11,13 @@ import org.eclipse.m2e.settings.core.model.SettingFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConfigurationHelper {
+public final class ConfigurationHelper {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ConfigurationHelper.class);
 
-	private static final Pattern PATTERN = Pattern
-			.compile("([a-b,\\.])\\.pref$");
+	private ConfigurationHelper() {
+	}
 
 	public static SettingFiles extractSettingsFile(Plugin eclipsePlugin) {
 

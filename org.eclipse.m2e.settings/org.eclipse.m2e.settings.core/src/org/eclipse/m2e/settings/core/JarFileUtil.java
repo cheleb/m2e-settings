@@ -11,7 +11,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2e.core.embedder.IMaven;
 
-public class JarFileUtil {
+public final class JarFileUtil {
+
+	private JarFileUtil() {
+	}
+
 	public static List<JarFile> resolveJar(IMaven maven,
 			List<Dependency> dependencies, IProgressMonitor monitor)
 			throws IOException, CoreException {

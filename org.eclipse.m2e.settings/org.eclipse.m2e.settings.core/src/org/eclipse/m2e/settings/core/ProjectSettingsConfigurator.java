@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.maven.model.Plugin;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.core.resources.IProject;
@@ -18,7 +16,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.ui.preferences.formatter.FormatterProfileStore;
 import org.eclipse.jdt.internal.ui.preferences.formatter.ProfileManager.Profile;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.MavenRuntime;
 import org.eclipse.m2e.core.embedder.MavenRuntimeManager;
@@ -31,11 +28,11 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+
 
 public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 
-	private final static Logger LOGGER = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ProjectSettingsConfigurator.class);
 
 	private static final String ORG_ECLIPSE_M2E_SETTINGS_MAVEN_ECLIPSE_PLUGIN = "org.eclipse.m2e.settings:maven-eclipse-plugin";
@@ -79,10 +76,9 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		return runtime;
 	}
 
-	@SuppressWarnings("restriction")
+	
 	private void setJavaOptions(InputStream inputStream, String profileName,
-			IProgressMonitor monitor, IProject project) throws IOException,
-			CoreException {
+			IProject project) throws IOException, CoreException {
 
 		if (inputStream != null) {
 
@@ -102,31 +98,29 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		}
 	}
 
-	@SuppressWarnings("restriction")
+	
 	private Profile findProfile(List<Profile> profiles, String profileName) {
 		if (profiles == null || profiles.size() == 0) {
 			LOGGER.warn("No profiles: " + profiles);
 			return null;
 		}
 
-		if (profiles.size() == 1) {
-			if (profileName != null) {
-				Profile profile = profiles.get(0);
-				if (profileName.equals(profile.getName())) {
-					return profile;
-				} else {
-					LOGGER.warn("Profile name: " + profileName
-							+ " does not match with the only profile found: "
-							+ profile.getName());
-					return profile;
-				}
+		if (profiles.size() == 1 && profileName != null) {
+			Profile profile = profiles.get(0);
+			if (profileName.equals(profile.getName())) {
+				return profile;
+			} else {
+				LOGGER.warn("Profile name: " + profileName
+						+ " does not match with the only profile found: "
+						+ profile.getName());
+				return profile;
 			}
 		}
 		if (profiles.size() > 0) {
 
 			if (profileName == null) {
 				Profile profile = profiles.get(0);
-				LOGGER.warn("Profile not specified, taking the first found: "
+				LOGGER.debug("Profile not specified, taking the first found: "
 						+ profile.getName());
 				return profile;
 			}
@@ -171,25 +165,25 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		List<JarFile> jarFiles = JarFileUtil.resolveJar(maven,
 				eclipsePlugin.getDependencies(), monitor);
 
-		applyFormatter(project, monitor, settingFiles, jarFiles);
+		applyFormatter(project, settingFiles, jarFiles);
 
-		applyEclipsePreferencesPref(project, monitor, settingFiles, jarFiles);
+		applyEclipsePreferencesPref(project, settingFiles, jarFiles);
 
 		return true;
 	}
 
 	private void applyEclipsePreferencesPref(IProject project,
-			IProgressMonitor monitor, SettingFiles settingFiles,
-			List<JarFile> jarFiles) throws IOException {
+			SettingFiles settingFiles, List<JarFile> jarFiles)
+			throws IOException {
 		List<EclipsePreference> eclipsePreferences = settingFiles
 				.getEclipsePreferences();
 
 		for (EclipsePreference eclipsePreference : eclipsePreferences) {
 
-			
 			InputStream contentStream = null;
 			try {
-				contentStream = openStream(eclipsePreference.getFilename(), jarFiles);
+				contentStream = openStream(eclipsePreference.getFilename(),
+						jarFiles);
 				if (contentStream == null) {
 					LOGGER.error("Could not find content for: "
 							+ eclipsePreference.getFilename());
@@ -209,9 +203,8 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 
 	}
 
-	private void applyFormatter(IProject project, IProgressMonitor monitor,
-			SettingFiles settingFiles, List<JarFile> jarFiles)
-			throws IOException, CoreException {
+	private void applyFormatter(IProject project, SettingFiles settingFiles,
+			List<JarFile> jarFiles) throws IOException, CoreException {
 		if (settingFiles.hasFormatter()) {
 			Formatter formatter = settingFiles.getFormatter();
 			InputStream contentStream = null;
@@ -222,7 +215,7 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 							+ formatter.getFileName());
 				} else {
 					setJavaOptions(contentStream, formatter.getProfile(),
-							monitor, project);
+							project);
 				}
 			} finally {
 				if (contentStream != null) {

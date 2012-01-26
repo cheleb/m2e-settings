@@ -12,8 +12,16 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ProjectPreferencesUtils {
+public final class ProjectPreferencesUtils {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ProjectPreferencesUtils.class);
+
+	private ProjectPreferencesUtils() {
+	}
 
 	static Preferences getPrefences(IProject project, String pref) {
 		return Platform.getPreferencesService().getRootNode()
@@ -24,7 +32,7 @@ public class ProjectPreferencesUtils {
 			String pref) throws IOException, BackingStoreException {
 
 		if (inputStream == null) {
-			System.out.println("No settings for: " + pref);
+			LOGGER.warn("No settings for: " + pref);
 			return;
 		}
 		Preferences preferences = getPrefences(project, pref);
@@ -43,7 +51,7 @@ public class ProjectPreferencesUtils {
 
 		preferences.flush();
 
-		System.out.println("Updated preferences: " + pref);
+		LOGGER.info("Updated preferences: " + pref);
 	}
 
 }

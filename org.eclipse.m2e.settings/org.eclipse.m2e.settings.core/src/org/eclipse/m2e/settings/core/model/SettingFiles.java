@@ -7,12 +7,10 @@ import java.util.Map;
 public class SettingFiles {
 
 	private Formatter formatter;
-	
+
 	private Map<String, String> extraFiles;
 
 	private List<EclipsePreference> eclipsePreferences = new ArrayList<EclipsePreference>();
-
-	
 
 	public Formatter getFormatter() {
 		return formatter;
@@ -34,21 +32,13 @@ public class SettingFiles {
 		return formatter != null;
 	}
 
-
-
 	public void setEclipsePreferences(List<EclipsePreference> eclipsePreferences) {
 		this.eclipsePreferences = eclipsePreferences;
-		
+
 	}
 
-	
 	public List<EclipsePreference> getEclipsePreferences() {
 		return eclipsePreferences;
 	}
-	
 
-	
-	
-	 
-	
 }
