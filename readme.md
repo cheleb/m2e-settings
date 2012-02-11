@@ -2,7 +2,6 @@ Usage example:
 
 <build>
 		<plugins>
-                      ...
 			<plugin>
 				<groupId>org.eclipse.m2e.settings</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -31,6 +30,5 @@ Usage example:
 					</dependency>
 				</dependencies>
 			</plugin>
-                    ...
 		</plugins>
 	</build>
