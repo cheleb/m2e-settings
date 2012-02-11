@@ -13,7 +13,7 @@ Usage example:
 				</configuration>
 				<executions>
 					<execution>
-						<id></id>
+						<id>eclipse settings</id>
 						<goals>
 							<goal>eclipse</goal>
 						</goals>
