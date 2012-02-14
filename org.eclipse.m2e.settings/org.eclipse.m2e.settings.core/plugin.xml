@@ -40,7 +40,7 @@
               class="org.eclipse.m2e.settings.core.ProjectSettingsConfigurator"
               id="org.eclipse.m2e.settings.core.configurator"
               name="JDT Settings"
-              >
+              secondaryTo="org.eclipse.m2e.jdt.javaConfigurator">
         </configurator>
      </extension>
 </plugin>

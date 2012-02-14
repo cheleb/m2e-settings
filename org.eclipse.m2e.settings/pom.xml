@@ -1,62 +1,46 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipse.m2e.settings</groupId>
-	<artifactId>org.eclipse.m2e.settings</artifactId>
-
-	<version>1.1.1</version>
-
-	<packaging>pom</packaging>
-	<name>General settings configuration support</name>
-	<description>Allow the eclipse settings configuration (file encoding, formater ...) from maven configuration.</description>
-
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
-
-
-
-	<parent>
-		<groupId>org.sonatype.forge</groupId>
-		<artifactId>forge-parent</artifactId>
-		<version>10</version>
-	</parent>
-
-
-	<repositories>
-		<repository>
-			<id>rso</id>
-			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
-		</repository>
-
-		<repository>
-			<id>helios</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/indigo</url>
-		</repository>
-
-		<repository>
-			<id>m2e</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/m2e/releases/1.0</url>
-		</repository>
-	</repositories>
-
-
-	<properties>
-		<tycho-version>0.12.0</tycho-version>
-		<!-- <target.platform>m2e-wtp-e36</target.platform> -->
-	</properties>
-
-	<modules>
-		<module>org.eclipse.m2e.settings.core</module>
-		<module>org.eclipse.m2e.settings.feature</module>
-		<module>org.eclipse.m2e.settings.site-m2e-settings</module>
-		<module>sample-configuration-artifact</module>
-		<module>maven-eclipse-plugin</module>
-	</modules>
-
-<profiles>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.m2e.settings</groupId>
+  <artifactId>org.eclipse.m2e.settings</artifactId>
+  <version>1.2.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>General settings configuration support</name>
+  <description>Allow the eclipse settings configuration (file encoding, formater ...) from maven configuration.</description>
+  <prerequisites>
+    <maven>3.0</maven>
+  </prerequisites>
+  <parent>
+    <groupId>org.sonatype.forge</groupId>
+    <artifactId>forge-parent</artifactId>
+    <version>10</version>
+  </parent>
+  <repositories>
+    <repository>
+      <id>rso</id>
+      <url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+    </repository>
+    <repository>
+      <id>helios</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/indigo</url>
+    </repository>
+    <repository>
+      <id>m2e</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/technology/m2e/releases/1.0</url>
+    </repository>
+  </repositories>
+  <properties>
+    <tycho-version>0.12.0</tycho-version>
+  </properties>
+  <modules>
+    <module>org.eclipse.m2e.settings.core</module>
+    <module>org.eclipse.m2e.settings.feature</module>
+    <module>org.eclipse.m2e.settings.site</module>
+    <module>sample-configuration-artifact</module>
+  </modules>
+  <profiles>
     <profile>
       <id>sun-jvm</id>
       <activation>
@@ -104,7 +88,9 @@
     <profile>
       <id>sign</id>
       <activation>
-        <property><name>jarsigner.alias</name></property>
+        <property>
+          <name>jarsigner.alias</name>
+        </property>
       </activation>
       <build>
         <plugins>
@@ -125,66 +111,53 @@
       </build>
     </profile>
   </profiles>
-
-
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<resolver>p2</resolver>
-					<ignoreTychoRepositories>true</ignoreTychoRepositories>
-				</configuration>
-			</plugin>
-		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.sonatype.tycho</groupId>
-					<artifactId>maven-osgi-test-plugin</artifactId>
-					<version>${tycho-version}</version>
-					<configuration>
-						<useUIHarness>true</useUIHarness>
-						<includes>
-							<include>**/*Test.java</include>
-						</includes>
-						<argLine>${tycho.test.jvmArgs}</argLine>
-
-						<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.4.3</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-
-	<!-- <profiles> <profile> <id>sun-jvm</id> <activation> <property> <name>java.vendor.url</name> 
-		<value>http://java.sun.com/</value> </property> </activation> <properties> 
-		<tycho.test.jvmArgs>-Xmx512m -XX:MaxPermSize=256m</tycho.test.jvmArgs> </properties> 
-		</profile> <profile> <id>osx</id> <activation> <property> <name>java.vendor.url</name> 
-		<value>http://www.apple.com/</value> </property> </activation> <properties> 
-		<tycho.test.jvmArgs>-Xmx512m -XX:MaxPermSize=256m -Dosgi.ws=cocoa -XstartOnFirstThread</tycho.test.jvmArgs> 
-		<osgi.ws>cocoa</osgi.ws> </properties> </profile> <profile> <id>sign</id> 
-		<activation> <property> <name>jarsigner.alias</name> </property> </activation> 
-		<build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jarsigner-plugin</artifactId> 
-		<version>1.2</version> <executions> <execution> <id>sign</id> <goals> <goal>sign</goal> 
-		</goals> </execution> </executions> </plugin> </plugins> </build> </profile> 
-		</profiles> -->
-
-
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <resolver>p2</resolver>
+          <ignoreTychoRepositories>true</ignoreTychoRepositories>
+        </configuration>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonatype.tycho</groupId>
+          <artifactId>maven-osgi-test-plugin</artifactId>
+          <version>${tycho-version}</version>
+          <configuration>
+            <useUIHarness>true</useUIHarness>
+            <includes>
+              <include>**/*Test.java</include>
+            </includes>
+            <argLine>${tycho.test.jvmArgs}</argLine>
+            <forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.4.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <!-- <profiles> <profile> <id>sun-jvm</id> <activation> <property> <name>java.vendor.url</name> <value>http://java.sun.com/</value> 
+    </property> </activation> <properties> <tycho.test.jvmArgs>-Xmx512m -XX:MaxPermSize=256m</tycho.test.jvmArgs> </properties> 
+    </profile> <profile> <id>osx</id> <activation> <property> <name>java.vendor.url</name> <value>http://www.apple.com/</value> 
+    </property> </activation> <properties> <tycho.test.jvmArgs>-Xmx512m -XX:MaxPermSize=256m -Dosgi.ws=cocoa -XstartOnFirstThread</tycho.test.jvmArgs> 
+    <osgi.ws>cocoa</osgi.ws> </properties> </profile> <profile> <id>sign</id> <activation> <property> <name>jarsigner.alias</name> 
+    </property> </activation> <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jarsigner-plugin</artifactId> 
+    <version>1.2</version> <executions> <execution> <id>sign</id> <goals> <goal>sign</goal> </goals> </execution> </executions> 
+    </plugin> </plugins> </build> </profile> </profiles> -->
 </project>

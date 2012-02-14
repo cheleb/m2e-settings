@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.m2e.settings.feature"
       label="Eclipse Settings"
-      version="1.1.1">
+      version="1.2.1.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
