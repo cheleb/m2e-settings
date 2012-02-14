@@ -25,6 +25,3 @@ Usage example:
    </plugin>
  </plugins>
 </build>
-
-
-
