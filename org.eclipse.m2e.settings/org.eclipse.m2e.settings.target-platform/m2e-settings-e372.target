@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.6"?>
+
+<target name="m2e-settings-e372" sequenceNumber="30">
+<locations>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="ch.qos.logback.core" version="0.9.27.v20110224-1110"/>
+<unit id="org.slf4j.api" version="1.6.1.v20100831-0715"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20110907174232/repository/"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.m2e.sdk.feature.feature.group" version="1.0.100.20110804-1717"/>
+<unit id="org.eclipse.m2e.feature.feature.group" version="1.0.100.20110804-1717"/>
+<unit id="org.eclipse.m2e.logback.feature.feature.group" version="1.0.100.20110804-1717"/>
+<repository location="http://download.eclipse.org/technology/m2e/releases/1.0"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.sonatype.m2e.mavenarchiver.feature.feature.group" version="0.14.0.201109102204"/>
+<repository location="http://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.14.0/N/0.14.0.201109102204/"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.wst.common.fproj.feature.group" version="3.3.0.v201102150115-377DF8s7355397B4B9B"/>
+<unit id="org.eclipse.jst.common.fproj.enablement.jdt.feature.group" version="3.3.0.v201102200555-377DF8s73543E5I5768"/>
+<unit id="org.eclipse.jst.enterprise_ui.feature.feature.group" version="3.3.1.v201107072200-7b7II1PFSK2WIlPwJBmNz-VWwVsTn"/>
+<unit id="org.eclipse.jst.web_ui.feature.feature.group" version="3.3.1.v201108102009-7F7AFO3C25TohHcojh0Zyz-B7FyifIcGz-xuz-_W"/>
+<unit id="org.eclipse.wst.web_ui.feature.feature.group" version="3.3.1.v201107072200-7O7IFhREMiB5vNoYqf01XHTvUndyz-yx-9kUyXXL"/>
+<unit id="org.eclipse.jst.server_adapters.feature.feature.group" version="3.2.100.v20110303-208Z7w31211419"/>
+<unit id="org.eclipse.jst.server_adapters.ext.feature.feature.group" version="3.3.1.v20110729_1216-777HFHyCcNBDjBfJa4BA8"/>
+<unit id="org.eclipse.wst.server_adapters.feature.feature.group" version="3.2.100.v20110303-51EoAkF77g8HBSc"/>
+<repository location="http://download.eclipse.org/webtools/repository/indigo/"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<unit id="org.eclipse.swtbot.ide.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<unit id="org.eclipse.swtbot.eclipse.test.junit3.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<unit id="org.eclipse.swtbot.eclipse.test.junit4.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<unit id="org.eclipse.swtbot.forms.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<unit id="org.eclipse.swtbot.feature.group" version="2.0.5.20111003_1754-3676ac8-dev-e36"/>
+<repository location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.common.feature.group" version="2.6.0.v20100914-1218"/>
+<unit id="org.eclipse.emf.edit.feature.group" version="2.6.0.v20100914-1218"/>
+<repository location="http://download.jboss.org/jbosstools/updates/requirements/emf/2.6/"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.draw2d.feature.group" version="3.7.1.v20110830-1143-4607w3122194102254"/>
+<unit id="org.eclipse.gef.feature.group" version="3.7.1.v20110830-1143-777D181B3Bz06C853D8863365"/>
+<repository location="http://download.eclipse.org/tools/gef/updates/releases"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.sdk" version="3.7.2.M20120208-0800"/>
+<repository location="http://download.eclipse.org/eclipse/updates/3.7"/>
+</location>
+</locations>
+</target>
