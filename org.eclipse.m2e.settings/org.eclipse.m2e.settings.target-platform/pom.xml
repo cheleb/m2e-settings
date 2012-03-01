@@ -10,7 +10,7 @@
   <groupId>org.eclipse.m2e.settings</groupId>
   <artifactId>org.eclipse.m2e.settings.target-platform</artifactId>
   <packaging>pom</packaging>
-  <name>Maven Integration for Eclipse WTP Target platform</name>
+  <name>Maven Integration for Eclipse settings Target platform</name>
   <build>
     <plugins>
       <plugin>
