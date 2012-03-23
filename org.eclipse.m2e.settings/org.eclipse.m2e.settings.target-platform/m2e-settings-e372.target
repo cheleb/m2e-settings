@@ -24,9 +24,6 @@
 <unit id="org.eclipse.jst.enterprise_ui.feature.feature.group" version="3.3.1.v201107072200-7b7II1PFSK2WIlPwJBmNz-VWwVsTn"/>
 <unit id="org.eclipse.jst.web_ui.feature.feature.group" version="3.3.1.v201108102009-7F7AFO3C25TohHcojh0Zyz-B7FyifIcGz-xuz-_W"/>
 <unit id="org.eclipse.wst.web_ui.feature.feature.group" version="3.3.1.v201107072200-7O7IFhREMiB5vNoYqf01XHTvUndyz-yx-9kUyXXL"/>
-<unit id="org.eclipse.jst.server_adapters.feature.feature.group" version="3.2.100.v20110303-208Z7w31211419"/>
-<unit id="org.eclipse.jst.server_adapters.ext.feature.feature.group" version="3.3.1.v20110729_1216-777HFHyCcNBDjBfJa4BA8"/>
-<unit id="org.eclipse.wst.server_adapters.feature.feature.group" version="3.2.100.v20110303-51EoAkF77g8HBSc"/>
 <repository location="http://download.eclipse.org/webtools/repository/indigo/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
