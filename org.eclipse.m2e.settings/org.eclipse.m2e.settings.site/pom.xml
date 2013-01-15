@@ -10,51 +10,12 @@
     <version>1.2.1-SNAPSHOT</version>
   </parent>
   <artifactId>org.eclipse.m2e.settings.site</artifactId>
-  <packaging>eclipse-update-site</packaging>
+  <packaging>eclipse-repository</packaging>
   <name>Maven Integration for Eclipse Settings Update site</name>
   <properties>
     <updatesite.name>m2e-settings</updatesite.name>
   </properties>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-packaging-plugin</artifactId>
-        <version>${tycho-version}</version>
-        <!-- <executions> -->
-        <!-- <execution> -->
-        <!-- <id>categorization</id> -->
-        <!-- <phase>package</phase> -->
-        <!-- <goals> -->
-        <!-- <goal>category-p2-metadata</goal> -->
-        <!-- </goals> -->
-        <!-- </execution> -->
-        <!-- </executions> -->
-        <configuration>
-          <metadataRepositoryName>Maven Integration for Eclipse Settings</metadataRepositoryName>
-          <artifactRepositoryName>Maven Integration for Eclipse Settings</artifactRepositoryName>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/assembly/assembly.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+ 
   <profiles>
     <profile>
       <id>publish-site</id>
@@ -91,7 +52,7 @@
             <!-- https://github.com/cheleb/maven-updatesite-helper -->
             <groupId>org.eclipse.maven.updatesite</groupId>
             <artifactId>maven-updatesite-plugin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
             <configuration>
               <sites combine.children="append">
                 <site>
@@ -121,7 +82,7 @@
           <plugin>
             <groupId>org.eclipse.maven.updatesite</groupId>
             <artifactId>maven-updatesite-plugin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
             <configuration>
               <sites combine.children="append">
                 <site>
