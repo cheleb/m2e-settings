@@ -14,7 +14,7 @@
       <action>
         <configurator>
           <id>org.eclipse.m2e.settings.core.configurator</id>
-          <runOnIncremental>false<runOnIncremental>
+          <runOnIncremental>false</runOnIncremental>
           <runOnConfiguration>true</runOnConfiguration>
         </configurator>
       </action>

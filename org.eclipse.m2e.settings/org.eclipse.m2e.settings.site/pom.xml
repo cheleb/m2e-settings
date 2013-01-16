@@ -58,7 +58,7 @@
                 <site>
                   <baseURL>${primary.updatesite.url}</baseURL>
                   <serverId>${primary.updatesite.serverId}</serverId>
-                  <parent>${updatesite.parent}-test</parent>
+                  <parent>${updatesite.parent}</parent>
                   <name>${updatesite.name}</name>
                 </site>
               </sites>

@@ -1,8 +1,12 @@
 package org.eclipse.m2e.settings.core;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -71,21 +75,22 @@ public final class ProfileHelper {
 			String profileName) throws CoreException {
 		List<Profile> profiles = FormatterProfileStore
 				.readProfilesFromStream(new InputSource(inputStream));
-
+		Set<String> skipedOptions = new HashSet<String>();
+		skipedOptions.add("org.eclipse.jdt.core.compiler.codegen.targetPlatform");
+		skipedOptions.add("org.eclipse.jdt.core.compiler.compliance");
+		skipedOptions.add("org.eclipse.jdt.core.compiler.source");
 		Profile profile = findProfile(profiles, profileName);
 		if (profile != null) {
 			IJavaProject javaProject = JavaCore.create(project);
 
-			Map<String, String> javaOptions = extractJavaOption(javaProject);
-			javaOptions.putAll(profile.getSettings());
-			javaProject.setOptions(javaOptions);
-
+            for (Entry<String, String> entry : profile.getSettings().entrySet()) {
+            	if(skipedOptions.contains(entry.getKey()))
+            		continue;
+				javaProject.setOption(entry.getKey(), entry.getValue());
+			}
 		}
 
 	}
 
-	@SuppressWarnings("unchecked")
-	private static Map<String, String> extractJavaOption(IJavaProject javaProject) {
-		return javaProject.getOptions(false);
-	}
+
 }

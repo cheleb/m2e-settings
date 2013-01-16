@@ -14,7 +14,7 @@
 	<groupId>org.eclipse.m2e.settings.feature</groupId>
 	<artifactId>org.eclipse.m2e.settings.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
-	<name>Maven Integration for Eclipse Settings (Optional)</name>
+	<name>Maven Integration for Eclipse Settings</name>
 
 	<build>
 		<plugins>
