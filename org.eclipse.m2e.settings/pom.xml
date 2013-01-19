@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.m2e.settings</groupId>
 	<artifactId>org.eclipse.m2e.settings</artifactId>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>1.3.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>General settings configuration support</name>
 	<description>Allow the eclipse settings configuration (file encoding, formater ...) from maven configuration.</description>

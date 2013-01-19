@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.m2e.settings.feature_1.2.1.qualifier.jar" id="org.eclipse.m2e.settings.feature" version="1.2.1.qualifier">
+   <feature url="features/org.eclipse.m2e.settings.feature_1.3.1.qualifier.jar" id="org.eclipse.m2e.settings.feature" version="1.3.1.qualifier">
       <category name="m2e.settings"/>
    </feature>
    <category-def name="m2e.settings" label="Maven Integration for Eclipse Settings">

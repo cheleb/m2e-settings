@@ -7,6 +7,7 @@ import org.apache.maven.model.Plugin;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 import org.eclipse.m2e.settings.core.model.EclipsePreference;
 import org.eclipse.m2e.settings.core.model.Formatter;
+import org.eclipse.m2e.settings.core.model.PropertiesHolder;
 import org.eclipse.m2e.settings.core.model.SettingFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,8 +62,9 @@ public final class ConfigurationHelper {
 					eclipsePreference.setFilename(filename);
 					eclipsePreference.setPref(name);
 					eclipsePreferences.add(eclipsePreference);
-
+					extractProperties(preferenceDom, eclipsePreference);
 				}
+
 			}
 
 		}
@@ -75,15 +77,30 @@ public final class ConfigurationHelper {
 			Formatter formatter = new Formatter();
 			Xpp3Dom formatterFileName = formatterXpp3Dom.getChild("filename");
 			if (formatterFileName != null) {
-				formatter.setFileName(formatterFileName.getValue());
+				formatter.setFilename(formatterFileName.getValue());
 			}
 			Xpp3Dom formatterProfileName = formatterXpp3Dom.getChild("profile");
 			if (formatterProfileName != null) {
 				formatter.setProfile(formatterProfileName.getValue());
 			}
+			extractProperties(formatterXpp3Dom, formatter);
 			return formatter;
 		}
 		return null;
+	}
+
+	private static void extractProperties(Xpp3Dom xpp3Dom,
+			PropertiesHolder propertiesHolder) {
+
+		Xpp3Dom properties = xpp3Dom.getChild("properties");
+		if (properties == null) {
+			return;
+		}
+		for (int i = 0; i < properties.getChildCount(); i++) {
+			Xpp3Dom prop = properties.getChild(i);
+			propertiesHolder.addProperty(prop.getName(), prop.getValue());
+		}
+
 	}
 
 }

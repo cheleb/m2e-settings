@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.maven.model.Plugin;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.core.resources.IProject;
@@ -24,7 +22,6 @@ import org.eclipse.m2e.settings.core.model.SettingFiles;
 import org.osgi.service.prefs.BackingStoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 
@@ -48,19 +45,19 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		if (eclipsePlugin == null) {
 			LOGGER.info("Could not set eclipse settings, consider "
 					+ ORG_ECLIPSE_M2E_SETTINGS_MAVEN_ECLIPSE_PLUGIN + "!");
-		} else {
-			LOGGER.info("Using "
-					+ ORG_ECLIPSE_M2E_SETTINGS_MAVEN_ECLIPSE_PLUGIN
-					+ " configuration");
-			try {
-				if (configureEclipseMeta(project, eclipsePlugin, monitor)) {
-					LOGGER.info("Project configured.");
-				} else {
-					LOGGER.error("Project not configured.");
-				}
-			} catch (IOException e) {
-				LOGGER.error("Failure during settings configuration", e);
+			return;
+		}
+
+		LOGGER.info("Using " + ORG_ECLIPSE_M2E_SETTINGS_MAVEN_ECLIPSE_PLUGIN
+				+ " configuration");
+		try {
+			if (configureEclipseMeta(project, eclipsePlugin, monitor)) {
+				LOGGER.info("Project configured.");
+			} else {
+				LOGGER.error("Project not configured.");
 			}
+		} catch (IOException e) {
+			LOGGER.error("Failure during settings configuration", e);
 		}
 
 	}
@@ -75,12 +72,12 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 		return runtime;
 	}
 
-	private void setJavaOptions(InputStream inputStream, String profileName,
+	private void setJavaOptions(InputStream inputStream, Formatter formatter,
 			IProject project) throws IOException, CoreException {
 
 		if (inputStream != null) {
-
-			ProfileHelper.doProfile(project, inputStream, profileName);
+			
+			ProfileHelper.doProfile(project, inputStream, formatter);
 
 		}
 	}
@@ -93,8 +90,6 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 	 * @param buildPluginMap
 	 * @param monitor
 	 * @return
-	 * @throws SAXException
-	 * @throws ParserConfigurationException
 	 * @throws IOException
 	 * @throws CoreException
 	 */
@@ -137,7 +132,7 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 							+ eclipsePreference.getFilename());
 				} else {
 					ProjectPreferencesUtils.setOtherPreferences(project,
-							contentStream, eclipsePreference.getPref());
+							contentStream, eclipsePreference);
 				}
 
 			} catch (BackingStoreException e) {
@@ -157,12 +152,12 @@ public class ProjectSettingsConfigurator extends AbstractProjectConfigurator {
 			Formatter formatter = settingFiles.getFormatter();
 			InputStream contentStream = null;
 			try {
-				contentStream = openStream(formatter.getFileName(), jarFiles);
+				contentStream = openStream(formatter.getFilename(), jarFiles);
 				if (contentStream == null) {
 					LOGGER.error("Could not find content for: "
-							+ formatter.getFileName());
+							+ formatter.getFilename());
 				} else {
-					setJavaOptions(contentStream, formatter.getProfile(),
+					setJavaOptions(contentStream, formatter,
 							project);
 				}
 			} finally {

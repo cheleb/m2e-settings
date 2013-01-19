@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SettingFiles {
+public class SettingFiles  {
 
 	private Formatter formatter;
 

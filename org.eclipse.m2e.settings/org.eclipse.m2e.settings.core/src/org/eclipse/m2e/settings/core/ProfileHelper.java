@@ -3,6 +3,7 @@ package org.eclipse.m2e.settings.core;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.ui.preferences.formatter.FormatterProfileStore;
 import org.eclipse.jdt.internal.ui.preferences.formatter.ProfileManager.Profile;
+import org.eclipse.m2e.settings.core.model.Formatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -70,25 +72,30 @@ public final class ProfileHelper {
 	}
 
 	public static void doProfile(IProject project, InputStream inputStream,
-			String profileName) throws CoreException {
+			Formatter formatter) throws CoreException {
 		List<Profile> profiles = FormatterProfileStore
 				.readProfilesFromStream(new InputSource(inputStream));
 		Set<String> skipedOptions = new HashSet<String>();
-		skipedOptions.add("org.eclipse.jdt.core.compiler.codegen.targetPlatform");
+		skipedOptions
+				.add("org.eclipse.jdt.core.compiler.codegen.targetPlatform");
 		skipedOptions.add("org.eclipse.jdt.core.compiler.compliance");
 		skipedOptions.add("org.eclipse.jdt.core.compiler.source");
-		Profile profile = findProfile(profiles, profileName);
+		Profile profile = findProfile(profiles, formatter.getProfile());
 		if (profile != null) {
 			IJavaProject javaProject = JavaCore.create(project);
-
-            for (Entry<String, String> entry : profile.getSettings().entrySet()) {
-            	if(skipedOptions.contains(entry.getKey()))
-            		continue;
-				javaProject.setOption(entry.getKey(), entry.getValue());
+			Map<String, String> overridenProperties = formatter.getProperties();
+			for (Entry<String, String> entry : profile.getSettings().entrySet()) {
+				if (skipedOptions.contains(entry.getKey())) {
+					continue;
+				}
+				if (overridenProperties.containsKey(entry.getKey())) {
+					javaProject.setOption(entry.getKey(), overridenProperties.get(entry.getKey()));
+				} else {
+					javaProject.setOption(entry.getKey(), entry.getValue());
+				}
 			}
 		}
 
 	}
-
 
 }

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.m2e.settings.feature"
       label="Eclipse Settings"
-      version="1.2.1.qualifier">
+      version="1.3.1.qualifier">
 
    <description url="http://github.com/cheleb/m2e-settings/">
       m2e configurator to read and apply eclipse settings (formatter preferences, templates).
