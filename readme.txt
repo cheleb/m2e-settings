@@ -1,3 +1,6 @@
+Evolution of this project is hosted at  https://github.com/topicusonderwijs/m2e-settings
+
+
 Usage example:
 
 <build>
